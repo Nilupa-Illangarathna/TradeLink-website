@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Add your custom CSS styles here */
+
+        .header {
+            background-color: #2b2a2a;
+            color: white;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        #scroll-menu {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        #scroll-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        #scroll-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .grid__item {
+            background-color: #fff;
+            border-radius: 0.4rem;
+            overflow: hidden;
+            box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .grid__item:hover {
+            transform: translateY(-0.5%);
+            box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.2);
+        }
+
+
+        .property-card {
+            height: 20em;
+            width: 18em;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            position: relative;
+            -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            border-radius: 16px;
+            overflow: hidden;
+            -webkit-box-shadow: 15px 15px 27px white, -15px -15px 27px white;
+            box-shadow: 15px 15px 27px white, -15px -15px 27px white;
+        }
+
+        /* ^-- The margin bottom is necessary for the drop shadow otherwise it gets clipped in certain cases. */
+
+        /* Top Half of card, image. */
+
+        .property-image {
+            height: 14em;
+            width: 18em;
+            padding: 2em 2em;
+            position: Absolute;
+            top: 0px;
+            -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        /* Bottom Card Section */
+
+        .property-description {
+            background-color: white;
+            height: 14em;
+            width: 18em;
+            position: absolute;
+            bottom: 0em;
+            -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 0.2em;
+            text-align: center;
+            margin-top: -0.3em; /* Adjust this value as needed */
+            font-size: medium;
+        }
+
+        
+        /* Social Icons */
+
+        .property-social-icons {
+            width: 1em;
+            height: 1em;
+            background-color: black;
+            position: absolute;
+            bottom: 1em;
+            left: 1em;
+            -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        /* Property Cards Hover States */
+
+        .property-card:hover .property-description {
+            height: 0em;
+            padding: 0px 0em;
+        }
+
+        .property-card:hover .property-image {
+            height: 14.3em;
+        }
+
+        .property-card:hover .property-social-icons {
+            background-color: white;
+        }
+
+        .property-card:hover .property-social-icons:hover {
+            background-color: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Company Name</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu" aria-labelledby="productsDropdown">
+                    <a class="dropdown-item" href="/products/electric">Electric</a>
+                    <a class="dropdown-item" href="/products/wooden">Wooden</a>
+                    <a class="dropdown-item" href="/products/fabric">Fabric</a>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/feedback">Feedback</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="container mt-4">
+        <br><br><h2>Products</h2><br><br>
+        <div class="row">
+            <% data.products.forEach(product => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="property-card">
+                        <a href="#">
+                            <div class="property-image" style="background-image: url('/<%= product.imageUrl %>');">
+                            </div>
+                        </a>
+                        <div class="property-description">
+                            <h5><%= product.name %></h5>
+                            <p><%= product.description %></p>
+                            <p>Product Type: <%= product.productType %></p>
+                            <p>Manufactured Date: <%= product.manufacturedDate %></p>
+                            <p>Price: <%= product.price %></p>
+                            <p>Manufacturer: <%= product.manufacturer %></p>
+                            <p>Country: <%= product.country %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    
+    
+
+    <br><br><br><br><br>
+    <div id="footer" class="footer">
+        <img src="https://picsum.photos/700/700?random=8" alt="Company Logo" style="width: 50px; border-radius: 50%;">
+        <p>&copy; <%= new Date().getFullYear() %> Company Name @ Org</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
