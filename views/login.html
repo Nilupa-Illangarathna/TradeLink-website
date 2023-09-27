@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Chess Club Login</title>
+  <style>
+    body {
+      margin: 5% 5%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Deakin Chess Club</h1>
+    <h3>Introductory Message</h3>
+    <p>Welcome to the website of the <em>Deakin Chess Club</em>! This site allows existing members to login and view
+      their match results. Please login below:</p>
+
+    <div class="card" style="border: 1px solid lightblue;">
+      <div class="card-header" style="background-color: lightblue;">
+        <h5>Login Section</h5>
+      </div>
+      <div class="card-body">
+        <form id="loginForm" method="POST" action="/login">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+          <button type="button" class="btn btn-danger" onclick="resetDatabase()">Reset Database</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    function resetDatabase() {
+      fetch('/reset', { method: 'POST' })
+        .then(() => {
+          alert('Database has been reset.');
+        })
+        .catch((error) => {
+          console.error('Error resetting database:', error);
+        });
+    }
+  </script>
+</body>
+
+</html>

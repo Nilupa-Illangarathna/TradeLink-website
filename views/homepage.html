@@ -7,8 +7,6 @@
     <title>Homepage</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Add your custom CSS styles here */
-
         .header {
             background-color: #2b2a2a;
             color: white;
@@ -82,8 +80,6 @@
             box-shadow: 15px 15px 27px white, -15px -15px 27px white;
         }
 
-        /* ^-- The margin bottom is necessary for the drop shadow otherwise it gets clipped in certain cases. */
-
         /* Top Half of card, image. */
 
         .property-image {
@@ -114,7 +110,7 @@
             text-align: center;
         }
 
-        
+
         /* Social Icons */
 
         .property-social-icons {
@@ -154,20 +150,21 @@
 <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">TradeLink</a>
+        <a class="navbar-brand" href="/homepage">TradeLink</a>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item dropdown">
+            <li class="nav-item"><a class="nav-link" href="/homepage">Home</a></li>
+            <!-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Products
                 </a>
                 <div class="dropdown-menu" aria-labelledby="productsDropdown">
-                    <a class="dropdown-item" href="/products/electric">Electric</a>
-                    <a class="dropdown-item" href="/products/wooden">Wooden</a>
-                    <a class="dropdown-item" href="/products/fabric">Fabric</a>
+                    <a class="dropdown-item" href="/products/items">Electric</a>
+                    <a class="dropdown-item" href="/products/items">Wooden</a>
+                    <a class="dropdown-item" href="/products/items">Fabric</a>
                 </div>
-            </li>
+            </li> -->
+            <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
             <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
             <li class="nav-item"><a class="nav-link" href="/feedback">Feedback</a></li>
         </ul>
@@ -184,16 +181,18 @@
         <div class="text-center">
             <h2>Welcome to TradeLink
             </h2>
-            <p><%= data.introduction %></p>
+            <p>
+                <%= data.introduction %>
+            </p>
         </div>
         <br><br>
-        
-        
+
+
         <div id="news-events" class="anchor mt-4">
             <h3>Latest News and Events</h3>
             <br>
             <div class="row">
-                <% data.latestNews.forEach(news => { %>
+                <% data.latestNews.forEach(news=> { %>
                     <div class="col-md-4 mb-4">
                         <div class="property-card">
                             <a href="#">
@@ -201,41 +200,49 @@
                                 </div>
                             </a>
                             <div class="property-description">
-                                <p ><%= news.headline %></p>
-                                <p ><%= news.description %></p>
+                                <p>
+                                    <%= news.headline %>
+                                </p>
+                                <p>
+                                    <%= news.description %>
+                                </p>
                             </div>
                         </div>
                     </div>
-                <% }); %>
+                    <% }); %>
             </div>
         </div>
-        
+
         <div id="attractive-images" class="anchor mt-4">
             <h3>Attractive Images</h3>
             <div class="row">
-                <% data.attractiveImages.forEach(image => { %>
+                <% data.attractiveImages.forEach(image=> { %>
                     <div class="col-md-3 mb-4">
                         <div class="grid__item">
                             <div class="card">
                                 <img src="<%= image.imageUrl %>" class="card__img" alt="Attractive Image">
                                 <div class="card__content">
                                     <br>
-                                    <h5 class="card__header" style="text-align: center"><%= image.name %></h1><br>
-                                    <p class="card__text" style="text-align: center"><%= image.description %></p> <!-- Description added -->
-                                    <br>
+                                    <h5 class="card__header" style="text-align: center">
+                                        <%= image.name %>
+                                            </h1><br>
+                                            <p class="card__text" style="text-align: center">
+                                                <%= image.description %>
+                                            </p> <!-- Description added -->
+                                            <br>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
-                <% }); %>
+                    <% }); %>
             </div>
         </div>
-        
+
         <div id="attractive-images" class="anchor mt-4">
             <h3>Attractive Images</h3>
             <br>
             <div class="row">
-                <% data.attractiveImages.forEach(news => { %>
+                <% data.attractiveImages.forEach(news=> { %>
                     <div class="col-md-4 mb-4">
                         <div class="property-card">
                             <a href="#">
@@ -243,12 +250,16 @@
                                 </div>
                             </a>
                             <div class="property-description">
-                                <h4><%= news.headline %></h4>
-                                <p><%= news.description %></p>
+                                <h4>
+                                    <%= news.headline %>
+                                </h4>
+                                <p>
+                                    <%= news.description %>
+                                </p>
                             </div>
                         </div>
                     </div>
-                <% }); %>
+                    <% }); %>
             </div>
         </div>
 
