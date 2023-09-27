@@ -9,10 +9,11 @@ app.engine('html', require('ejs').renderFile); // Use EJS to render HTML
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public")); // Set static directory
 
+// Access control
+let isAdmin = false;
+
+
 // // Dummy data
-
-
-/////////////////////////////Login data/////////////////////////
 // Login data
 const db = new sqlite3.Database('databases/login.db');
 
@@ -23,6 +24,11 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
+    if(username==="admin" && password === "admin123"){
+      isAdmin=true;
+    }else{
+      isAdmin=false;
+    }
     if (err) {
       res.status(500).send('Internal Server Error');
     } else if (row) {
@@ -31,7 +37,7 @@ app.post('/login', (req, res) => {
       const totalMatches = won + lost + drawn;
       const winPercentage = (won / totalMatches * 100).toFixed(2);
 
-      res.render("homepage.html", { data: homepageData });
+      res.render("homepage.html", { data: homepageData , isAdmin:isAdmin});
     } else {
       // Send unsuccessful login response
       const responseHTML = `
@@ -56,16 +62,12 @@ app.post('/login', (req, res) => {
     }
   });
 });
-/////////////////////////////Login data/////////////////////////
 
-
-
-// /////////////////////////////Homepage data/////////////////////////
-
-// Initialize homepageData as a let variable
+// Homepage data
+// Initialize homepageData variable
 let homepageData = null;
 
-// Create a function to load homepage data from the database
+// Function to load homepage data from the database
 function loadHomepageData(callback) {
   const homepageDb = new sqlite3.Database('databases/homepage.db');
   homepageDb.get('SELECT data FROM homepageData', (err, row) => {
@@ -81,7 +83,7 @@ function loadHomepageData(callback) {
   });
 }
 
-// Load homepageData at the start of your application
+// Load homepageData at the start of the app
 loadHomepageData((err, data) => {
   if (err) {
     console.error('Error loading homepage data:', err);
@@ -93,12 +95,8 @@ loadHomepageData((err, data) => {
   }
 });
 
-// /////////////////////////////Homepage data/////////////////////////
-
-
-// /////////////////////////////About data/////////////////////////\
-
-// Initialize aboutData as a let variable
+// About data
+// Initialize aboutData variable
 let aboutData = null;
 
 function loadAboutData(callback) {
@@ -116,7 +114,7 @@ function loadAboutData(callback) {
   });
 }
 
-// Load aboutData at the start of your application
+// Load aboutData at the start of the app
 loadAboutData((err, data) => {
   if (err) {
     console.error('Error loading about data:', err);
@@ -128,14 +126,11 @@ loadAboutData((err, data) => {
   }
 });
 
-// /////////////////////////////About data/////////////////////////
-
-// /////////////////////////////Feedback data/////////////////////////
-
-// Initialize feedbackData as a let variable
+// Feedback data
+// Initialize feedbackData variable
 let feedbackData = null;
 
-// Create a function to load feedback data from the database
+// Function to load feedback data from the database
 function loadFeedbackData(callback) {
   const feedbackDb = new sqlite3.Database('databases/feedbackDB.db');
   feedbackDb.get('SELECT data FROM feedbackData', (err, row) => {
@@ -151,7 +146,7 @@ function loadFeedbackData(callback) {
   });
 }
 
-// Load feedbackData at the start of your application
+// Load feedbackData at the start of the app
 loadFeedbackData((err, data) => {
   if (err) {
     console.error('Error loading feedback data:', err);
@@ -162,15 +157,12 @@ loadFeedbackData((err, data) => {
     console.log('No feedback data found in the database.');
   }
 });
-// /////////////////////////////Feedback data/////////////////////////
 
-
-/////////////////////////////Products data/////////////////////////
-
+// Products data
 // Initialize allProducts as an array
 let allProducts = [];
 
-// Create a function to load products data from the database
+// Function to load products data from the database
 function loadProductsData(callback) {
   const productsDb = new sqlite3.Database('databases/productsDB.db');
   productsDb.get('SELECT data FROM products', (err, row) => {
@@ -186,7 +178,7 @@ function loadProductsData(callback) {
   });
 }
 
-// Load allProducts at the start of your application
+// Load allProducts at the start of the app
 loadProductsData((err, data) => {
   if (err) {
     console.error('Error loading products data:', err);
@@ -198,12 +190,8 @@ loadProductsData((err, data) => {
   }
 });
 
-/////////////////////////////Products data/////////////////////////
-
-
-
 app.post('/reset', (req, res) => {
-  // Handle POST request to reset the database
+  // POST request to reset the database
   db.serialize(() => {
     db.run('DELETE FROM users', (err) => {
       if (err) {
@@ -221,61 +209,27 @@ app.post('/reset', (req, res) => {
 
 // Feedback route
 app.get("/homepage", function(req, res) {
-    res.render("homepage.html", { data: homepageData });
+    res.render("homepage.html", { data: homepageData , isAdmin:isAdmin });
 });
 
 // About Us route
 app.get("/about", function(req, res) {
-    res.render("about.html", { data: aboutData });
+    res.render("about.html", { data: aboutData , isAdmin:isAdmin});
 });
 
 // Feedback route
 app.get("/feedback", function(req, res) {
-    res.render("feedback.html", { data: feedbackData });
+    res.render("feedback.html", { data: feedbackData , isAdmin:isAdmin });
 });
 
-// // Products route
-// app.get("/products/:category", function(req, res) {
-//     const category = req.params.category;
-
-//     // Filter products based on category
-//     const filteredProducts = allProducts;
-
-//     res.render("products.html", { data: { products: filteredProducts } });
-// });
+// Products route
 app.get("/products", function(req, res) {
-
-  // Filter products based on category
-  const filteredProducts = allProducts;
-  res.render('products', { products: filteredProducts });
-
+  res.render('products', { products: allProducts , isAdmin:isAdmin });
 });
-
-
-
-// app.post("/submit-feedback", function(req, res) {
-//     const submittedData = {
-//         email: req.body.email,
-//         contactNumber: req.body.contactNumber,
-//         feedback: req.body.feedback
-//     };
-
-    
-//     // Print submitted feedback data
-//     console.log(submittedData);
-
-//     res.send("Feedback submitted successfully");
-// });
-
-
-
-
-
-
 
 
 app.post('/submit-feedback', (req, res) => {
-  // Handle POST request to save feedback to the database
+  // POST request to save feedback to the database
   const { email, contactNumber, feedback } = req.body;
 
   const db = new sqlite3.Database('./databases/commentsDB.db');
@@ -298,9 +252,8 @@ app.post('/submit-feedback', (req, res) => {
 });
 
 
-// Add these routes to your existing Node.js application
+// Route to show feedbacks
 app.get('/showFeedbacks', (req, res) => {
-  // Serve the showFeedbacks.html page
   res.sendFile(__dirname + '/views/showFeedbacks.html');
 });
 
@@ -339,16 +292,7 @@ app.post('/reset-feedbacks', (req, res) => {
   db.close();
 });
 
-
-
-
-
-
-
-
-
-
-
+// App listen to the port 3000
 app.listen(3000, function() {
     console.log("Server created on port 3000");
 });

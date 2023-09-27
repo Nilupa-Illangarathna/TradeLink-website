@@ -2,11 +2,11 @@ const sqlite3 = require('sqlite3').verbose();
 
 // Dummy data for feedback
 const feedbackData = {
-    imageUrl: "/images/image01.jpg",
-    email: "dummy@example.com",
-    contactNumber: "123-456-7890",
-    address: "Dummy address",
-    linkedIn: "Dummy LinkedIn profile"
+  imageUrl: "/images/image01.jpg",
+  email: "dummy@example.com",
+  contactNumber: "123-456-7890",
+  address: "Dummy address",
+  linkedIn: "Dummy LinkedIn profile"
 };
 
 // Create and populate the feedbackDB.db database

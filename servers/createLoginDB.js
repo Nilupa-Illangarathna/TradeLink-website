@@ -5,7 +5,7 @@ const db = new sqlite3.Database('databases/login.db');
 
 db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT, fullname TEXT, won INTEGER, lost INTEGER, drawn INTEGER)');
-  
+
   const stmt = db.prepare('INSERT OR IGNORE INTO users (username, password, fullname, won, lost, drawn) VALUES (?, ?, ?, ?, ?, ?)');
 
   const usersData = [
